@@ -46,10 +46,14 @@ displayGpg(){
     echo " "
     showkeyIndices
     read -p "Enter the index of the GPG key you want to view starting from 1: " gpgIndex
-    index=$(gpgIndex)
-    gpg_to_view="${keys_array[index]}"
-    echo "GPG key to view: $gpg_to_view"
-    gpg --armor --export $gpg_to_view
+    index=$((gpgIndex-1))
+    if [[ $gpg_count -gt $index ]];then
+        gpg_to_view="${keys_array[index]}"
+        echo "GPG key to view: $gpg_to_view"
+        gpg --armor --export $gpg_to_view
+    else 
+        echo -e "${RED}Please enter from 1 to $gpg_count${DEFAULT}"
+    fi    
 }
 
 generateGpg(){
