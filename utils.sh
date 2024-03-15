@@ -19,8 +19,8 @@ default(){
     read -r -d '' -a emails_array <<< "$emails"
     read -r -d '' -a keys_array <<< "$line"
 
-
 }
+
 displayMenu(){
 
     echo -e "${BLUE} ============================================"
@@ -76,7 +76,6 @@ configureGpg(){
     if [[ $gpg_count -gt $index ]];then
         echo "$gpg_to_configure"
         git config --global --unset gpg.format
-        git config --global --unset gpg.format
         git config --global --replace-all user.signingkey  $gpg_to_configure
         if ! [[ $? -ne 0 ]]; then
             echo -e "${GREEN}Gpg configured with id $gpg_to_configure ${DEFAULT}" 
@@ -94,7 +93,6 @@ deleteGPG(){
     default
     showkeyIndices
     read -p "Enter the index of the GPG key you want to delete starting from 1 : " gpgIndexToDelete
-    # lower=16*$((gpgIndexToDelete-1))
     index=$((gpgIndexToDelete-1))
     if [[ $gpg_count -gt $index ]];then
         gpg_to_delete="${keys_array[index]}"
