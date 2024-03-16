@@ -83,6 +83,10 @@ configureGpg(){
         fi
         if [ "$auto_sign" == "y" ];then
             git config --global commit.gpgsign true
+            echo -e "${GREEN}All your commits will now be auto signed with id $gpg_to_configure${DEFAULT}" 
+        else
+            git config --global commit.gpgsign false
+            echo -e "${GREEN} You have to manualy sign commit wiht -S flag${DEFAULT}" 
         fi
     else 
         echo -e "${RED}Please enter from 1 to $gpg_count${DEFAULT}"
