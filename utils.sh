@@ -47,7 +47,7 @@ displayGpg(){
     showkeyIndices
     read -p "Enter the index of the GPG key you want to view starting from 1: " gpgIndex
     index=$((gpgIndex-1))
-    if [[ $gpg_count -gt $index ]];then
+    if [[ $gpg_count -gt $index ]]&& [[ $index -ge 0 ]];then
         gpg_to_view="${keys_array[index]}"
         echo "GPG key to view: $gpg_to_view"
         gpg --armor --export $gpg_to_view
@@ -59,6 +59,10 @@ displayGpg(){
 generateGpg(){
     echo " "
     gpg --full-generate-key  
+    default
+    gpg_to_view="${keys_array[-1]}"
+    gpg --armor --export $gpg_to_view
+
     echo "Do you want to confgure this key to local git ? y/N"
     read nextInput
     if [ "$nextInput" == 'y' ];then 
@@ -73,7 +77,7 @@ configureGpg(){
     read -p "Enter the index of the GPG key you want to configure starting from 1 : " gpgIndexToConfigure
     index=$((gpgIndexToConfigure-1))
     gpg_to_configure="${keys_array[index]}"
-    if [[ $gpg_count -gt $index ]];then
+    if [[ $gpg_count -gt $index ]] && [[ $index -ge 0 ]] ;then
         echo "$gpg_to_configure"
         git config --global --unset gpg.format
         git config --global --replace-all user.signingkey  $gpg_to_configure
@@ -98,7 +102,7 @@ deleteGPG(){
     showkeyIndices
     read -p "Enter the index of the GPG key you want to delete starting from 1 : " gpgIndexToDelete
     index=$((gpgIndexToDelete-1))
-    if [[ $gpg_count -gt $index ]];then
+    if [[ $gpg_count -gt $index ]] && [[ $index -ge 0 ]];then
         gpg_to_delete="${keys_array[index]}"
         gpg --delete-secret-keys $gpg_to_delete
         echo -e "${GREEN}Gpg deleted with id $(echo -n "$gpg_to_delete" | tr -d '\n') ${DEFAULT}"
