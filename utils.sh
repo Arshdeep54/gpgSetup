@@ -36,7 +36,7 @@ displayMenu(){
 showkeyIndices(){
     echo -e "${YELLOW}You have $gpg_count gpg keys "
     for ((i = 0; i < gpg_count; i++)); do
-        printf "%-10s %-30s %s\n"  "${usernames_array[i]}" "${emails_array[i]}" "${keys_array[i]}"   
+        printf "%-2s %-10s %-30s %s\n"  "$((i+1))" "${usernames_array[i]}" "${emails_array[i]}" "${keys_array[i]}"   
     done
     echo -e "${DEFAULT}"
 }
@@ -51,8 +51,11 @@ displayGpg(){
         gpg_to_view="${keys_array[index]}"
         echo "GPG key to view: $gpg_to_view"
         gpg --armor --export $gpg_to_view
+        gpg --armor --export $gpg_to_view | xclip -selection clipboard
+
     else 
         echo -e "${RED}Please enter from 1 to $gpg_count${DEFAULT}"
+        
     fi    
 }
 
