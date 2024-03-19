@@ -49,9 +49,15 @@ displayGpg(){
     index=$((gpgIndex-1))
     if [[ $gpg_count -gt $index ]]&& [[ $index -ge 0 ]];then
         gpg_to_view="${keys_array[index]}"
-        echo "GPG key to view: $gpg_to_view"
+        echo "GPG key to view: $gpg_to_view"]
+        echo -e "${GREEN}Copy from here ${DEFAULT}" 
+        echo "_________________________________________________________________"
         gpg --armor --export $gpg_to_view
+        echo "__________________________________________________________________"
         gpg --armor --export $gpg_to_view | xclip -selection clipboard
+        echo " "
+        echo -e "${GREEN}Key copied to clipboard . Paste it in github's gpg key section ${DEFAULT}" 
+
 
     else 
         echo -e "${RED}Please enter from 1 to $gpg_count${DEFAULT}"
